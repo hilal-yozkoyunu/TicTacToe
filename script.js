@@ -22,9 +22,23 @@ function init(){
     render();
 }
 
+function updateTurn() {
+    let turn = document.getElementById('player');
+    
+    if (currentPlayer === 'circle') {
+        const circleSVG = generateCircleSVG();
+        const circleString = new XMLSerializer().serializeToString(circleSVG);
+        turn.innerHTML = `${circleString} ist an der Reihe!`;
+    } else {
+        const crossSVG = generateCrossSVG();
+        const crossString = new XMLSerializer().serializeToString(crossSVG);
+        turn.innerHTML = `${crossString} ist an der Reihe!`; 
+    }
+}
 
 function render(){
     const contentDiv = document.getElementById('content');
+    updateTurn();
 
     let tableHtml = '<table>';
     for (let i = 0; i < 3; i++) {
@@ -63,11 +77,12 @@ function handleClick(cell, index) {
         }
         cell.onclick = null;
         currentPlayer = currentPlayer === 'circle' ? 'cross' : 'circle';
-
+        updateTurn();
         if (checkGameOver()) {
             // Spiel ist vorbei, fügen Sie hier den Code zum Anhalten des Spiels hinzu
         }
     }
+
 }
 
 
@@ -92,9 +107,10 @@ function checkGameOver() {
     // Unentschieden (Remis)
     if (!fields.includes(null)) {
         endGame(); // Spiel beenden
+        let turn = document.getElementById('player');
+        turn.innerHTML = `Unentschieden!`;
         return true;
     }
-
     return false;
 }
 
@@ -124,6 +140,8 @@ function drawWinningLine(a, b, c) {
     line.style.transform = `rotate(${lineAngle}rad)`;
     line.style.transformOrigin = `top left`;
     document.getElementById('content').appendChild(line);
+    let turn = document.getElementById('player');
+    turn.innerHTML = `Gewonnen!`;
 } 
 
 
@@ -154,7 +172,7 @@ function generateCircleSVG(){
     const animateDash = document.createElementNS("http://www.w3.org/2000/svg", "animate");
     animateDash.setAttribute("attributeName", "stroke-dasharray");
     animateDash.setAttribute("values", "0, 188; 188, 0; 0, 188");
-    animateDash.setAttribute("dur", "2s");
+    animateDash.setAttribute("dur", "1s");
     animateDash.setAttribute("repeatCount", "0.5");
 
     // Fügen Sie das animateDash-Element zum Kreis hinzu
@@ -208,5 +226,21 @@ function generateCrossSVG() {
 
     // Gibt das SVG-Element zurück
     return svg;
+}
+
+function restartGame(){
+    fields = [
+        null, 
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+    ];
+    currentPlayer = 'circle';
+    render();
 }
 

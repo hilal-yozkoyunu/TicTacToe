@@ -6,12 +6,13 @@ body{
 }
 h1{
     text-align: center;
+    color: yellow;
 }
 #content{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 60vh;
     position: relative;
 }
 table {
@@ -54,4 +55,27 @@ table tr td:last-child{
     background-color: red; /* Farbe der Linie anpassen */
     z-index: 1;
 
+}
+.restart{
+    background-color: blue;
+    color: white;
+    padding: 10px 20px; /* Anpassen Sie den Padding-Wert nach Bedarf */
+    border: none;
+    border-radius: 5px; /* Optional: Runde Ecken hinzufügen */
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+}
+.restart-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.restart:hover {
+    background-color: rgb(62, 62, 252); /* Neue Hintergrundfarbe bei Hover */
+}
+.player{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
